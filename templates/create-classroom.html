@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>3D Form Page Dialogue Box</title>
+	<style>
+		.container {
+			background-image: url('https://img.freepik.com/free-vector/gradient-glassmorphism-background_52683-86366.jpg?w=1060&t=st=1685121363~exp=1685121963~hmac=84a844ad47c3a34d41947065b23a623ed5a2df7a18eb7a01f08ec12363e77531');
+			background-size: cover;
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-size: cover;
+			background-position: center;
+		}
+
+		.button {
+			padding: 10px 20px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+
+		.form-dialogue {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.8);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transform-style: preserve-3d;
+			transform: perspective(1000px) rotateZ(180deg);
+			transition: transform 0.5s ease;
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		.form-dialogue.active {
+			transform: perspective(1000px) rotateY(0deg);
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		.form-content {
+			background-color: rgba(255, 255, 255, 0.5);
+			backdrop-filter: blur(8px);
+			padding: 20px;
+			border-radius: 5px;
+			max-width: 400px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+			transform: translateZ(200px);
+		}
+
+		.close-button {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			padding: 5px;
+			background-color: #ccc;
+			color: #333;
+			border: none;
+			border-radius: 50%;
+			cursor: pointer;
+		}
+
+		.form-dialogue-background {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url('https://img.freepik.com/free-vector/gradient-glassmorphism_23-2149456192.jpg?w=1060&t=st=1685121480~exp=1685122080~hmac=c45ecf1db247b0b4c0ba9f37fde619da9a4b7e90bc18d08b9e070dd4a85409cf');
+			background-size: cover;
+			background-position: center;
+			opacity: 0.8;
+		}
+	</style>
+	<script>
+		function toggleFormDialogue() {
+			var formDialogue = document.getElementById('formDialogue');
+			formDialogue.classList.toggle('active');
+		}
+	</script>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ username }}!<br></h1>
+		<button class="button" onclick="toggleFormDialogue()">Open Form</button>
+		<div id="formDialogue" class="form-dialogue">
+			<div class="form-dialogue-background"></div>
+			<div class="form-content">
+				<h2>Form </h2>
+				<form id="createClassForm" action="/createclass" method="post" enctype="multipart/form-data">
+                    <input type="text" name="classroom_name" placeholder="Classroom Name" required>
+                    <input type="file" name="zip_file" accept=".zip" required>
+                    <button type="submit">Create</button>
+                    <button type="button" onclick="toggleFormDialogue()">Cancel</button>
+                </form>
+				<button class="close-button" onclick="toggleFormDialogue()">Close</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
