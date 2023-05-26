@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Processing</title>
+    <style>
+        .container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Helvetica;
+        }
+
+        .loader {
+            height: 20px;
+            width: 250px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            display: none;
+        }
+
+        .loader--dot {
+            animation: loader 1s infinite ease-in-out;
+            height: 20px;
+            width: 20px;
+            border-radius: 100%;
+            background-color: #000;
+            position: absolute;
+            border: 2px solid #fff;
+        }
+
+        .loader--dot:nth-child(1) {
+            left: 0;
+            animation-delay: 0s;
+        }
+
+        .loader--dot:nth-child(2) {
+            left: 30px;
+            animation-delay: 0.1s;
+        }
+
+        .loader--dot:nth-child(3) {
+            left: 60px;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes loader {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1);
+                background-color: #000;
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
+    </style>
+    <script>
+        function showLoader() {
+            document.getElementById('loader').style.display = 'block';
+        }
+
+        function hideLoader() {
+            document.getElementById('loader').style.display = 'none';
+        }
+
+        function processImage() {
+            var fileInput = document.getElementById('imageFile');
+            var file = fileInput.files[0];
+
+            if (file) {
+                showLoader();
+
+                var formData = new FormData();
+                formData.append('image', file);
+
+                fetch('your-post-endpoint-url', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    hideLoader();
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Error processing image.');
+                    }
+                })
+                .then(data => {
+                    // Handle response data
+                    alert('Image processing completed!');
+                })
+                .catch(error => {
+                    hideLoader();
+                    alert(error.message);
+                });
+            } else {
+                alert('Please select an image to process.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Image Processing</h1>
+    <input type="file" id="imageFile" accept="image/*">
+    <button onclick="processImage()">Upload and Process</button>
+
+    <div class="container">
+        <div id="loader" class="loader">
+            <div class="loader--dot"></div>
+            <div class="loader--dot"></div>
+            <div class="loader--dot"></div>
+        </div>
+    </div>
+</body>
+</html>
