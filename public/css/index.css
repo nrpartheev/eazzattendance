@@ -1,0 +1,27 @@
+.classroom-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.classroom-card {
+    flex-basis: 30%;
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f2f2f2;
+    color: #333;
+    text-decoration: none;
+}
+
+.create-card {
+    background-color: #3ca1c1;
+    color: #fff;
+}
+
+.add-icon {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}

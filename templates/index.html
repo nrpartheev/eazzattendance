@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Welcome, {{ username }}!</h1>
+    <div class="classroom-container">
+        <button onclick="openForm()" class="classroom-card create-card">
+            <span class="add-icon">+</span>
+            <span>Create New Classroom</span>
+        </button>
+        
+        {% for classroom in classrooms %}
+            <a href="#" class="classroom-card">
+                <span>{{ classroom }}</span>
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="form-container" id="createFormContainer" style="display: none;">
+        <h2>Create New Classroom</h2>
+        <form id="createClassForm" action="/createclass" method="post" enctype="multipart/form-data">
+            <input type="text" name="classroom_name" placeholder="Classroom Name" required>
+            <input type="file" name="zip_file" accept=".zip" required>
+            <button type="submit">Create</button>
+            <button type="button" onclick="closeForm()">Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        
+        function openForm() {
+            document.getElementById("createFormContainer").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("createFormContainer").style.display = "none";
+        }
+    </script>
+{% endblock %}
